@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    
+
+</head>
+<body>
+
+
+    <nav class="bg-dark d-flex p-2">
+        <div class="text-white">TodoApp</div>
+        <div class="ms-auto"><a href="" class="btn btn-outline-warning">logout</a></div>
+    </nav>
+
+
+
+
+    Welcome {{request.user}}
+    <h1 class="text-center">TO DO LIST</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                {%if form.errors%}
+                   {%for f in form%}
+                      <div class="text-danger">
+                        <ul>
+                            <li>{{f.errors}}</li>
+                        </ul>
+                      </div>
+
+                   {%endfor%}
+
+                {%endif%}
+                <form action="" method="post">
+                    {%csrf_token%}
+                    <div class="input-group mb-3">
+                        <input type="text" name="name" class="form-control" placeholder="Task name" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-success" type="submit" id="button-addon2">ADD</button>
+                      </div>
+        
+                </form>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+            {%for t in data%}
+            <div class="alert alert-primary" role="alert">
+               <div class="row">
+                <div class="col-4">
+                    {%if t.status == True %}
+                        <span class="text-decoration-line-through">{{t}}</span>
+                        {%else%}
+                        <span>{{t}}</span>
+                           
+                    {%endif%}
+                    
+                </div>
+                <div class="col-4"></div>
+                <div class="col-4">
+                    
+
+                    <a href="{%url 'todo-update' t.id%}">
+                        <i class="fa-sharp fa-solid fa-circle-check"></i>
+                    </a>
+
+                   
+                    <a href="{%url 'todo-delete' t.id%}">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+
+                </div>
+               </div>
+                            
+            </div>
+
+            {%endfor%}
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+</body>
+</html>
